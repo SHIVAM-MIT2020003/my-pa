@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% load static %}
+{% block content %}
+<body style="background-color: #e6ebf4;">
+<div class="container">
+<div class="row">
+  {% for event in events %}
+  <div class="col-sm-6 col-md-4" style="margin-top:20px;">
+    <a href="{% url 'homepage' event.id %}">
+    <div class="thumbnail" id="cards" style="opacity:0.80;">
+      <div class="caption">
+        <h4 style="font-family:Roboto; color:white;text-align:center;"><strong>{{ event.title }}</strong></h4><hr style="margin: 15px;"/><br />
+        <p><span class="date">{{ event.start_date }}</span><span class="time">{{ event.start_time }}</span><br/></p>
+      </div>
+    </div>
+      </a>
+  </div>
+  {% endfor %}
+  </div>
+</div>
+</body>
+{% endblock %}

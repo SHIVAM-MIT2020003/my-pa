@@ -1,0 +1,8 @@
+# Add test and quality tools over here
+-r base.txt
+django-twilio
+coverage==4.4.1
+django-coverage-plugin==1.4.2
+nltk==3.2.5
+numpy==1.14.1
+simplejson==3.13.2

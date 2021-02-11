@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<body>
+<div class="app-bg">
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-sm-6" style="min-width:356px;">
+          <div id="results" style="background-color:white; font-family: 'Lora', serif;" class="box">
+            <span id="final_span" class="final"></span>
+            <div class="options">
+            <button id="download_button" class="download" onclick="downloadButton()"><i class="fa fa-download" style="font-size:24px; color:#4183D7;"></i></button>
+            <button id="{{id}}"   class="download" onclick="emailButton(id)"><i class="fa fa-envelope-open" style="font-size:24px; color:#4183D7;"></i></button>
+            </div>
+          </div>
+      </div>
+
+
+      <div class="col-sm-6" style="min-width:356px;">
+
+        <div id="nlp-box" style="background-color:white; font-family: 'Lora', serif;" class="box">
+            <span id="nlp-span"></span>
+            <span id="nlp-entity"></span>
+            <div class="options">
+            <button id="download_button" class="download" onclick="downloadSummary()"><i class="fa fa-download" style="font-size:24px; color:#4183D7;"></i></button>
+            <button id="{{id}}" class="download" onclick="emailButtonNLP(id)"><i class="fa fa-envelope-open" style="font-size:24px; color:#4183D7;"></i></button>
+            </div>
+          </div>
+
+
+        <br />
+        <div id="info">
+
+            <p id="info_start">Click on the microphone icon and begin speaking.</p>
+
+            <p id="info_speak_now">Speak now.</p>
+
+            <p id="info_no_speech">No speech was detected. You may need to adjust your
+            <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
+              microphone settings</a>.</p>
+
+            <p id="info_no_microphone" style="display:none">
+              No microphone was found. Ensure that a microphone is installed and that
+            <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
+              microphone settings</a> are configured correctly.</p>
+
+            <p id="info_allow">Click the "Allow" button above to enable your microphone.</p>
+
+            <p id="info_denied">Permission to use microphone was denied.</p>
+
+            <p id="info_blocked">Permission to use microphone is blocked. To change,
+              go to chrome://settings/contentExceptions#media-stream</p>
+
+            <p id="info_upgrade">Web Speech API is not supported by this browser.
+              Upgrade to <a href="//www.google.com/chrome">Chrome</a>
+              version 25 or later.</p>
+          </div>
+          <div class="center">
+            <div id="div_language">
+              <div class="left">
+              <select id="select_language" class="form-control" onchange="updateCountry()"></select>
+              </div>
+              <div class="middle"></div>
+              <div class="left">
+              <select id="select_dialect" class="form-control"></select>
+              </div>
+              <div class="middle"></div>
+              <div class="right">
+            {% if request.user.is_authenticated %}
+              <button id="start_button" onclick="startButton(event); startRecording(this); changeImage();">
+              <img id="start_img" src="{% static 'mic.gif' %}" alt="Start"></button>
+
+            {%else%}
+             <a href="{%url 'login'%}"><button id="start_button" onclick="startButton(event); startRecording(this);">
+               <img id="start_img" src="../static/mic.gif" alt="Start"></button></a>
+            {%endif%}
+                </div>
+            </div>
+          </div>
+      </div>
+
+
+    <div class="container pre" >
+      <span id="interim_span" class="interim" style="color: #1F4788; font-family: 'Merriweather', serif; font-size:16px"></span>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'main.js' %}"></script>
+    <script>
+    var img = document.getElementById('start_img');
+    function changeImage() {
+      if(img.getAttribute('src') == "/static/mic.gif") {
+        img.src = "{% static 'mic-animate.gif' %}";
+      }
+      else {
+      img.src = "{% static 'mic.gif' %}";
+      }
+    }
+    </script>
+    </div>
+  </div>
+  </div>
+</body>
+  <footer class="footer">
+          <p>&copy Hashedin Technologies All rights reserved</p>
+  </footer>
+{% endblock %}
